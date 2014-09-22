@@ -2,8 +2,8 @@
 NOTE:  This is a work in progress it is not 100% determined
 if this functionality will be moved from the
 [myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) 
-package to this package and repository.  
-This is a development experiment - for now.
+package to this package and repository.  This is a development 
+experiment - for now.
 
 
 Introduction
