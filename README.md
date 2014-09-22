@@ -2,30 +2,28 @@
 NOTE:  This is a work in progress it is not 100% determined
 if this functionality will be moved from the
 [myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) 
-package to this package and repository.  This is a development 
-experiment - for now.
+package to this package and repository.  This is an experiment 
+- for now.
 
 
 Introduction
 ============
 The name of this project, *gizflo*, is a play on the the word 
-gizmo.  It is intended to mean "that FPGA flow".  This 
-project simplifies, the sometimes complicated, FPGA tool-chains,
-in particular for [MyHDL](www.myhdl.org) designs.
+gizmo.  It is intended to mean "that FPGA flow".  This project 
+simplifies, the sometimes complicated, FPGA tool-chains, in 
+particular for [MyHDL](www.myhdl.org) designs.
 
 This project initiated as a quick tool to create a simple
 tool-flow for an 
 [FPGA workshop](http://www.fpgarelated.com/showarticle/437.php).  
-The tool-chain automation allowed 
-the participants to start **hacking** an FPGA instantly (well, 
-almost, you still need to go through the hassle to install the
-vendor tool-chains).
+The tool-chain automation allowed the participants to start 
+**hacking** an FPGA instantly (well, almost, you still need to 
+go through the hassle to install the vendor tools).
 
 This tool is intended to let developers easily map HDL designs to
 FPGA development boards for quick analysis and allow the designer 
 to focus on the HDL design and not the tool-flow.  The first version 
-of the tool-flow existed
-in the 
+of the tool-flow existed in the 
 [myhdl_tool](https://bitbucket.org/cfelton/myhdl_tools) 
 package but it was eventually (still under consideration) determined 
 the tool-flow needed a separate project and moved here.
@@ -54,12 +52,11 @@ import gizflo as gf
 brd = gf.get_board('xula2')
 ```
 
-At this point three different paths can be 
-taken:
+At this point three different paths can be taken:
 
 
   1. *Fuse*, given a board definition and a MyHDL top-level
-     automatically match ports.
+     automatically match ports and execute the tool-flow.
 
   2. *Bootstrap*, generate a Verilog or VHDL stub and
      FPGA project files.
@@ -80,25 +77,23 @@ flo = gf.flo.ISE(top=m_blinky, brd=brd)
 flo.run()
 ```
 
-A *port* is the signal in the top-level HDL module and
-a *pin* is the physical pin on a device.  A board definition
-contains the default port names, if the HDL module port 
-names match the default port names the module to board
-will be matched by name.  If the port names do not match 
-the default board definition port names the ports can manually 
-be added or renamed (added if the pin is known renamed if 
-the default port name is known).
+A *port* is the signal in the top-level HDL module and a *pin* is 
+the physical pin on a device.  A board definition contains the 
+default port names, if the HDL module port names match the default 
+port names the names are matched.  If the port names do not match 
+the ports can manually be added, linked, or renamed (added if the 
+pin is known, linked if the default port name is known, or renamed 
+if conflicts exist).
 
 <!-- @todo: -->
-Currently ports will only be matched by name, the
-goal of this functionality is to find a match for every
-port in the top-level.  In some scenarios this will not be
-possible, example if the 
-top-level has too many ports, obviously they will not be
-matched with a board port definition.  Even if the port 
-names do not match future functionality will find an 
-appropriate match.  This allows quick prototyping and
-analysis of designs.
+Currently ports will only be matched by name, the goal of this 
+functionality is to find a match for every port in the top-level,
+this feature needs to be extended to find a best match if the 
+names do not match.  In some scenarios this will not be possible, 
+example if the top-level has too many ports, obviously they will 
+not be matched with a board port definition.  Even if the port 
+names do not match future functionality will find an appropriate 
+match.  This allows quick prototyping and analysis of designs.
 
 
 Bootstrap
