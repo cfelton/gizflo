@@ -2,8 +2,8 @@
 NOTE:  This is a work in progress it is not 100% determined
 if this functionality will be moved from the
 [myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) 
-package to this package and repository.  This is an experiment 
-- for now.
+package to this package and repository.  This is an 
+experiment - for now.
 
 
 Introduction
@@ -14,8 +14,8 @@ simplifies, the sometimes complicated, FPGA tool-chains, in
 particular for [MyHDL](www.myhdl.org) designs.
 
 This project initiated as a quick tool to create a simple
-tool-flow for an 
-[FPGA workshop](http://www.fpgarelated.com/showarticle/437.php).  
+tool-flow for an [FPGA workshop]
+(http://www.fpgarelated.com/showarticle/437.php).  
 The tool-chain automation allowed the participants to start 
 **hacking** an FPGA instantly (well, almost, you still need to 
 go through the hassle to install the vendor tools).
@@ -23,8 +23,8 @@ go through the hassle to install the vendor tools).
 This tool is intended to let developers easily map HDL designs to
 FPGA development boards for quick analysis and allow the designer 
 to focus on the HDL design and not the tool-flow.  The first version 
-of the tool-flow existed in the 
-[myhdl_tool](https://bitbucket.org/cfelton/myhdl_tools) 
+of the tool-flow existed in the [myhdl_tool]
+(https://bitbucket.org/cfelton/myhdl_tools) 
 package but it was eventually (still under consideration) determined 
 the tool-flow needed a separate project and moved here.
 
@@ -166,7 +166,7 @@ manufactures documentation or schematics.
 Example: Xess Xula2
 -------------------
 The following is a minimal example creating a board defition
-for the [Xess Xula2]().
+for the [Xess Xula2](http://www.xess.com/shop/product/xula2-lx25/).
 
 ```python
 class Xula2(_fpga):
