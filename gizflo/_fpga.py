@@ -61,9 +61,11 @@ class _fpga(object):
         for k,v in default_extintf.iteritems():
             self.add_extintf(k, v)
 
+
     def has_top(self):
         """ a top-level is set """
         return self.top is not None
+
 
     def set_top(self, top, **params):
         self.top = top
@@ -80,17 +82,19 @@ class _fpga(object):
                 break
         return pattr
 
+
     def add_clock(self, name, frequency=1, pins=None, **pattr):
         assert isinstance(pin, (str,int))
         self.clocks[name] = _port(name, pins, frequency=frequency, **pattr)
-        
 
+        
     def add_reset(self, name, active, async, pins, **pattr):
         assert isinstance(active, bool)
         assert active in (0,1,)
         self._resets[name] = _port(name, pints, 
                                    active=active, 
                                    async=async, **pattr)
+
 
     def add_port(self, name, pins, **pattr):
         """ add a port definition
@@ -161,19 +165,6 @@ class _fpga(object):
         self._extintfs[name] = extintf
 
 
-    def pathexist(self, pth):
-        if os.path.isfile(pth):
-            pth,fn = os.path.split(pth)
-        fpth = ''
-        path_split = os.path.split(pth)
-        for ppth in pth.split(os.path.sep):
-            fpth = os.path.join(fpth,ppth)
-            if not os.path.isdir(fpth):
-                print("path create %s" % (fpth,))
-                os.mkdir(fpth)
-
-        return os.path.isdir(pth)
-
     def _get_name(self, name=None):
         """ determine which name should be used """
         if name is None:
@@ -182,6 +173,7 @@ class _fpga(object):
             else:
                 name = self.top.func_name
         return name
+
 
     def get_portmap(self, name=None, top=None, **kwargs):
         """ given a top-level map the port definitions 
