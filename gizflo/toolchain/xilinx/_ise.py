@@ -13,6 +13,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import division
+from __future__ import print_function
+
 import sys
 import os
 from time import gmtime, strftime
@@ -58,7 +61,7 @@ class ISE(_toolflow):
 
         
     def create_constraints(self, filename=None):
-        self.ucf_file = os.path.join(self._path, filename)
+        self.ucf_file = os.path.join(self._path, filename+'.ucf')
         ustr = ""
         ustr += "#\n"
         for port_name, port in self.ports.items():
@@ -217,7 +220,9 @@ class ISE(_toolflow):
 
         # convert the top-level
         cfiles = convert(self.brd, to=use)
-        self.create_constraints(filename=
+        self.add_files(cfiles)
+        self.create_constraints(filename=self.brd.top_name)
+        self.create_flow_script(filename=tcl_name)
 
         cmd = ['xtclsh', tcl_name]
         try:
