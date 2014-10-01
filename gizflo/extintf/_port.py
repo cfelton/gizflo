@@ -1,7 +1,7 @@
 
 import myhdl
 
-class _port(object):
+class Port(object):
     """ generic port definitions 
     A port is a "signal" in a top-level HDL module.  The ports
     are mapped to pins on physical devices.  This object is used
@@ -17,7 +17,7 @@ class _port(object):
         if len(pins) == 1:
             self.sig = myhdl.Signal(bool(0))
         else:
-            self.sig = myhdl.Signal(intbv(0)[len(pins):])
+            self.sig = myhdl.Signal(myhdl.intbv(0)[len(pins):])
 
         # device specific arguments, when the pin assignment
         # list is created the following will be used to create

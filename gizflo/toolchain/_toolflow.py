@@ -23,9 +23,9 @@ class _toolflow(object):
         Provided a myhdl top-level module and 
         """
 
-        self._path = path if path is not None else '.'
+        self._path = path if path is not None else brd.path
         self._fpga = brd
-        self._top_name = top.func_name
+        self.top_name = top.func_name
         self.tcl_name = self.top_name + '.tcl'
         self._hdl_file_list = set()
         self.logfn = None

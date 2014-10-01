@@ -22,7 +22,7 @@ from copy import copy
 
 import myhdl
 
-from extintf import _port
+from extintf import Port
 from extintf import Clock
 from extintf import Reset
 
@@ -52,14 +52,14 @@ class _fpga(object):
         self._extintfs = {}
 
         # walk through the default settings
-        for k,v in default_clocks.iteritems():
-            self.add_clock(k, v)
-        for k,v in default_resets.iteritems():
-            self.add_reset(k, v)
-        for k,v in default_ports.iteritems():
-            self.add_port(k, v)
-        for k,v in default_extintf.iteritems():
-            self.add_extintf(k, v)
+        for k,v in self.default_clocks.iteritems():
+            self.add_clock(k, **v)
+        for k,v in self.default_resets.iteritems():
+            self.add_reset(k, **v)
+        for k,v in self.default_ports.iteritems():
+            self.add_port(k, **v)
+        for k,v in self.default_extintf.iteritems():
+            self.add_extintf(k, **v)
 
 
     def has_top(self):
@@ -84,16 +84,18 @@ class _fpga(object):
 
 
     def add_clock(self, name, frequency=1, pins=None, **pattr):
-        assert isinstance(pin, (str,int))
-        self.clocks[name] = _port(name, pins, frequency=frequency, **pattr)
+        if isinstance(pins, (list,tuple)):
+            pins = pins[0]
+        assert isinstance(pins, (str,int)), "pins type %s" % (type(pins))
+        self._clocks[name] = Port(name, pins, frequency=frequency, **pattr)
 
         
     def add_reset(self, name, active, async, pins, **pattr):
-        assert isinstance(active, bool)
+        assert isinstance(async, bool)
         assert active in (0,1,)
-        self._resets[name] = _port(name, pints, 
-                                   active=active, 
-                                   async=async, **pattr)
+        self._resets[name] = Port(name, pins, 
+                                  active=active, 
+                                  async=async, **pattr)
 
 
     def add_port(self, name, pins, **pattr):
@@ -108,7 +110,7 @@ class _fpga(object):
 
         It is acceptable to have ports with the same names.
         """
-        if isinstances(pints, (str, int)):
+        if isinstance(pins, (str, int)):
             pins = [pins,]
         assert isinstance(pins, (list,tuple)), \
             "pins must be a list/tuple of pins (or a single str/int)"
@@ -119,7 +121,7 @@ class _fpga(object):
             assert isinstance(v, (str, int))
         # @todo: raise an error vs. 
         assert not self._ports.has_key(name)
-        self._ports[name] = _port(name, pins, **pattr)
+        self._ports[name] = Port(name, pins, **pattr)
 
 
     def add_port_name(self, name, port, slc=None, **pattr):

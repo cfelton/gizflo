@@ -43,7 +43,7 @@ class ISE(_toolflow):
         Give a top-level module (function) and a board definition
         create an instance of the ISE tool-chain.
         """
-        super().__init__(top, brd, path)
+        _toolflow.__init__(self, top, brd, path)
         #self.reports = _ise_parse_reports(self)
         brd.set_top(top)    
     

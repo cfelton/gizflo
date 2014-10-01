@@ -1,3 +1,4 @@
+#
 # Copyright (c) 2014 Christopher Felton
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,27 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import division
-from __future__ import print_function
 
-from xilinx._xula import Xula, Xula2
+import myhdl
+from myhdl import instance, delay
 
-xbrd = {
-    'xula': Xula,
-    'xula2': Xula2,
-}
-
-def get_board(name):
-    """ retrieve a board definition from the name provided.
-    """
-    brd = None
-    if xbrd.has_key(name):
-        brd = xbrd[name]()
-        brd.path = './xilinx/'
-    elif abrd.has_key(name):
-        brd = abrd[name]()
-        brd.path = './altera/'
-    else:
-        # @todo: print out a list of boards and descriptions
-        raise ValueError("Invalid board %s"%(name,))
-    
-    return brd
+class Reset(myhdl.ResetSignal):
+    def __init__(self, val, active, async):
+        myhdl.ResetSignal.__init__(self,val,active,async)
+        
