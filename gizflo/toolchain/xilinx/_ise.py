@@ -23,8 +23,10 @@ import subprocess
 from pprint import pprint
 
 from .._toolflow import _toolflow
+from .._convert import convert
 from ..._fpga import _fpga
 from ...extintf import Clock
+from _ise_parse_reports import get_utilization
 
 _default_pin_attr = {
     'NET': None,
@@ -38,14 +40,14 @@ class ISE(_toolflow):
     """
     """
 
-    def __init__(self, top, brd, path='./xilinx/'):
+    def __init__(self, brd, top=None, path='./xilinx/'):
         """
         Give a top-level module (function) and a board definition
         create an instance of the ISE tool-chain.
         """
-        _toolflow.__init__(self, top, brd, path)
+        _toolflow.__init__(self, brd, top=top, path=path)
         #self.reports = _ise_parse_reports(self)
-        brd.set_top(top)    
+        self.ucf_file = ''
     
 
     def add_files(self, fn):
@@ -60,11 +62,11 @@ class ISE(_toolflow):
         self._hdl_file_list.update(set(fn))
 
         
-    def create_constraints(self, filename=None):
-        self.ucf_file = os.path.join(self._path, filename+'.ucf')
+    def create_constraints(self):
+        self.ucf_file = os.path.join(self.path, self.name+'.ucf')
         ustr = ""
         ustr += "#\n"
-        for port_name, port in self.ports.items():
+        for port_name, port in self.brd.ports.items():
             if port.inuse:
                 _pins = port.pins
 
@@ -82,7 +84,7 @@ class ISE(_toolflow):
                         ustr += "LOC = \"p%s\" " % (str(pn))
 
                     # additional pin parameters
-                    for kp, vp in port.kwargs.items():
+                    for kp, vp in port.pattr.items():
                         if kp.lower() in ("pullup",) and vp is True:
                             ustr += " | %s " % kp
                         else:
@@ -92,7 +94,7 @@ class ISE(_toolflow):
         ustr += "#\n"
 
         # @todo: loop through the pins again looking for clocks
-        for port_name, port in self.ports.items():
+        for port_name, port in self.brd.ports.items():
             if port.inuse and isinstance(port.sig, Clock):
                 period = 1 / (port.sig.frequency / 1e9)
                 ustr += "NET \"%s\" TNM_NET = \"%s\"; \n" % (port_name, port_name)
@@ -108,7 +110,7 @@ class ISE(_toolflow):
         #print(ustr)
 
         
-    def create_flow_script(self, filename=None):
+    def create_flow_script(self):
         """ Create the ISE control script
         """
         # start with the text string for the TCL script
@@ -120,36 +122,33 @@ class ISE(_toolflow):
                            os.path.basename(sys.argv[0])
         self.tcl_script += '#\n#\n'
         
-        if filename:
-            fn = os.path.join(self._path, filename)
-        else:
-            fn = os.path.join(self._path, self.tcl_name)
+        fn = os.path.join(self.path, self.name+'.tcl')
             
         self.tcl_script += '# set compile directory:\n'
         self.tcl_script += 'set compile_directory %s\n' % '.'
 
-        if self.top_name:
-            self.tcl_script += 'set top_name %s\n' % self.top_name
-            self.tcl_script += 'set top %s\n' % self.top_name
+        if self.name:
+            self.tcl_script += 'set top_name %s\n' % self.name
+            self.tcl_script += 'set top %s\n' % self.name
 
         self.tcl_script += '# set Project:\n'
-        self.tcl_script += 'set proj %s\n' % self.top_name
+        self.tcl_script += 'set proj %s\n' % self.name
 
         # @note: because the directory is changed everything
-        #        is relative to self._path
+        #        is relative to self.path
         self.tcl_script += '# change to the directory:\n'
-        self.tcl_script += 'cd %s\n' % self._path
+        self.tcl_script += 'cd %s\n' % self.path
 
         # @todo: verify UCF file exists
-        bdir, ucffn = os.path.split(self.fpga.ucf_file)
+        bdir, ucffn = os.path.split(self.ucf_file)
         self.tcl_script += '# set ucf file:\n'
         self.tcl_script += 'set constraints_file %s\n' % ucffn
 
         self.tcl_script += '# set variables:\n'
-        pj_fn = self.top_name + '.xise'
+        pj_fn = self.name + '.xise'
         # Create or open an ISE project (xise?)
         print('Project name : %s ' % pj_fn)
-        pjfull = os.path.join(self._path, pj_fn)
+        pjfull = os.path.join(self.path, pj_fn)
 
         # let the TCL file be the master file, always create
         # a new project.  If a user uses this to "bootstrap"
@@ -161,11 +160,11 @@ class ISE(_toolflow):
         #else:
         self.tcl_script += 'project new %s\n' % pj_fn
 
-        if self.fpga.family:
-            self.tcl_script += 'project set family %s\n' % self.fpga.family
-            self.tcl_script += 'project set device %s\n' % self.fpga.device
-            self.tcl_script += 'project set package %s\n' % self.fpga.package
-            self.tcl_script += 'project set speed %s\n' % self.fpga.speed
+        if self.brd.family:
+            self.tcl_script += 'project set family %s\n' % self.brd.family
+            self.tcl_script += 'project set device %s\n' % self.brd.device
+            self.tcl_script += 'project set package %s\n' % self.brd.package
+            self.tcl_script += 'project set speed %s\n' % self.brd.speed
 
         # add the hdl files
         self.tcl_script += '\n'
@@ -204,29 +203,25 @@ class ISE(_toolflow):
         fid.write(self.tcl_script)
         fid.close()
             
+        return fn
 
     def run(self, use='verilog', filename=None):
         """ Execute the tool-flow """
 
-        # determine if this is being used to kick of an existing 
-        # flow script or if the files need to be generated.
-        if filename:
-            tcl_name = filename
-        else:
-            tcl_name = os.path.join(self._path, self.tcl_name)
-
-        if not os.path.exists(self._path):
-            os.mkdir(self._path)
+        self.pathexist(self.path)
 
         # convert the top-level
-        cfiles = convert(self.brd, to=use)
+        cfiles = convert(self.brd, name=self.name, 
+                         use=use, path=self.path)
         self.add_files(cfiles)
-        self.create_constraints(filename=self.brd.top_name)
-        self.create_flow_script(filename=tcl_name)
+
+        # create the ISE files to run the toolflow
+        self.create_constraints()
+        tcl_name = self.create_flow_script()
 
         cmd = ['xtclsh', tcl_name]
+        self.logfn = 'build_ise.log'
         try:
-            self.logfn = 'build_ise.log'
             logfile = open(self.logfn, 'w')
             subprocess.check_call(cmd,  #shell=True,
                                   stderr=subprocess.STDOUT,
@@ -235,4 +230,12 @@ class ISE(_toolflow):
         except Exception, err:
             print(err)
             raise err
+
+
+        return self.logfn
+
+
+    def get_utilization(self):
+        info = get_utilization(self.logfn)
+        return info
 

@@ -16,17 +16,38 @@
 from __future__ import division
 from __future__ import print_function
 
+import os
+
 class _toolflow(object): 
 
-    def __init__(self, top, brd, path=None):
+    def __init__(self, brd, top=None, name=None, path='.'):
         """
-        Provided a myhdl top-level module and 
+        Provided a myhdl top-level module and board definition
+        
+        This is the base-class for the various FPGA toolchains,
+        each toolchain will require a specific implementation, 
+        this base-class provides the common features and defines
+        the function each toolflow needs to implement.
+
+        Arguments
+          top  : myhdl top-level module
+          brd  : 
         """
 
-        self._path = path if path is not None else brd.path
-        self._fpga = brd
-        self.top_name = top.func_name
-        self.tcl_name = self.top_name + '.tcl'
+        self._path = path
+
+        # set the brd def top-level
+        if top is not None:
+            brd.set_top(top) 
+        self.brd = brd
+
+        # determing a name for this run, should be the brd def
+        # name, or the top-level name, or user specified name.
+        # This name should be applied to the file names, project
+        # name, and the top-level (converted) module name.
+        # the _fpga object (brd def) will determine if the board
+        # name of top-level is used
+        self.name = brd.top_name if name is None else name
         self._hdl_file_list = set()
         self.logfn = None
 
@@ -38,15 +59,6 @@ class _toolflow(object):
     @path.setter
     def path(self, p):
         self._path = p
-
-    @property
-    def fpga(self):
-        return self._fpga
-
-    @fpga.setter
-    def fpga(self, brd):
-        self._fpga = fpga
-
 
     def pathexist(self, pth):
         if os.path.isfile(pth):
@@ -62,17 +74,17 @@ class _toolflow(object):
         return os.path.isdir(pth)
         
 
-    def create_project(self, filename=None):
+    def create_project(self):
         """ Create a project file if needed
         """
         pass
 
-    def create_flow_script(self, filename=None):
+    def create_flow_script(self):
         """ Create the tool-flow script  if needed.
         """
         pass
 
-    def create_constraints(self, filename=None):
+    def create_constraints(self):
         """ Create the constraints
         """
         pass

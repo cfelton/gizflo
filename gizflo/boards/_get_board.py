@@ -29,10 +29,8 @@ def get_board(name):
     brd = None
     if xbrd.has_key(name):
         brd = xbrd[name]()
-        brd.path = './xilinx/'
     elif abrd.has_key(name):
         brd = abrd[name]()
-        brd.path = './altera/'
     else:
         # @todo: print out a list of boards and descriptions
         raise ValueError("Invalid board %s"%(name,))

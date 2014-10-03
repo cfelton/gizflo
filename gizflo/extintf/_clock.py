@@ -22,7 +22,7 @@ from myhdl import instance, delay
 ClockList = []
 
 class Clock(myhdl.SignalType):    
-    def __init__(self, val, frequency=1, timescale='1ns'):
+    def __init__(self, val, frequency=1, timescale='1ns', **pattr):
         self._frequency = frequency
         self._period = 1/frequency
         self._timescale = timescale

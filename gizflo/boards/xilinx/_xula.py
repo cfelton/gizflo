@@ -24,6 +24,7 @@ class Xula(_fpga):
     device = 'XC3S200A'
     package = 'VQ100'
     speed = '-4'
+    _name = 'xula'
 
     default_clocks = {
         'clock': dict(freqeuncy=12e6, pins=(43,)),
@@ -42,8 +43,9 @@ class Xula2(_fpga):
       vendor = 'xilinx'
       family = 'spartan6'
       device = 'XC6SLX25'
-      package = 'FT256'
+      package = 'FTG256'
       speed = '-2'
+      _name = 'xula2'
 
       default_clocks = {
           'clock': dict(frequency=12e6, pins=('A9',)),

@@ -32,8 +32,9 @@ class _fpga(object):
     vendor = "" # FPGA vendor, Altera, Xilinx, Lattice
     device = "" # FPGA device type
     family = "" # FPGA family
+    _name = None
 
-    # relate ports to the hardware
+    # relate ports to the hardware pins
     default_clocks = {}
     default_resets = {}
     default_ports = {}
@@ -43,8 +44,8 @@ class _fpga(object):
         
         # default attributes
         self.top = None        # top-level myhdl module
-        self.top_name = None   # resulting name, project name etc.
         self.top_params = None # top-level parameters
+        self.top_name = self._name   # resulting name, project name etc.
 
         self._clocks = {}
         self._resets = {}
@@ -62,6 +63,10 @@ class _fpga(object):
             self.add_extintf(k, **v)
 
 
+    @property
+    def ports(self):
+        return self._ports
+
     def has_top(self):
         """ a top-level is set """
         return self.top is not None
@@ -70,6 +75,8 @@ class _fpga(object):
     def set_top(self, top, **params):
         self.top = top
         self.top_params = params
+        if self.top_name is None:
+            self.top_name = top.func_name
 
 
     def _remove_embed_attr(self, pins, pattr):
@@ -87,15 +94,19 @@ class _fpga(object):
         if isinstance(pins, (list,tuple)):
             pins = pins[0]
         assert isinstance(pins, (str,int)), "pins type %s" % (type(pins))
-        self._clocks[name] = Port(name, pins, frequency=frequency, **pattr)
+        p = Port(name, pins, stype=Clock(0, frequency=frequency), **pattr)
+        self._clocks[name] = p
+        self._ports[name] = p
 
         
     def add_reset(self, name, active, async, pins, **pattr):
         assert isinstance(async, bool)
         assert active in (0,1,)
-        self._resets[name] = Port(name, pins, 
-                                  active=active, 
-                                  async=async, **pattr)
+        p = Port(name, pins, 
+                 stype=Reset(0, active=active, async=async), **pattr)
+        # add to the reset and port dicts
+        self._resets[name] = p
+        self._ports[name] = p
 
 
     def add_port(self, name, pins, **pattr):
@@ -165,33 +176,26 @@ class _fpga(object):
         """
         """
         self._extintfs[name] = extintf
+        # @todo: extract all the ports from the extintf and 
+        #    add them to the global port dict
 
 
-    def _get_name(self, name=None):
-        """ determine which name should be used """
-        if name is None:
-            if self.top_name is not None:
-                name = self.top_name
-            else:
-                name = self.top.func_name
-        return name
-
-
-    def get_portmap(self, name=None, top=None, **kwargs):
+    def get_portmap(self, top=None, **kwargs):
         """ given a top-level map the port definitions 
         This module will map the top-level MyHDL module ports
         to a board definition.
 
-        Typical usage:
+        Example usage:
             brd = gizflo.get_board(<board name>)
             portmap = brd.get_portmatp(top=m_myhdl_module)
             myhdl.toVerilog(m_myhdl_module, **portmap)
         """
-        if top is not None:
-            self.top = top
-        name = self._get_name(name)
 
-        # get teh top-level ports and parameters
+        if top is not None:
+            self.set_top(top)
+
+        # get the top-level ports and parameters
+        assert self.top is not None
         pp = inspect.getargspec(self.top)
 
         # all of the arguments (no default values) are treated as
@@ -235,7 +239,7 @@ class _fpga(object):
         # a keyword argument in the top-level this will fail
         # @todo: this matching code needs to be enhanced, this should
         #    always match a top-level port to a port def.
-        for port_name,port in self.ports.items():
+        for port_name,port in self._ports.items():
             if hdlports.has_key(port_name):
                 hdlports[port_name] = port.sig
                 port.inuse = True
