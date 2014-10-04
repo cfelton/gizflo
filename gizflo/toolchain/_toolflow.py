@@ -74,7 +74,10 @@ class _toolflow(object):
         return os.path.isdir(pth)
         
 
-    def create_project(self):
+    def set_default_project_file(self, filename=None):
+        self._default_project_file = filename
+
+    def create_project(self, **pattr):
         """ Create a project file if needed
         """
         pass
@@ -92,10 +95,24 @@ class _toolflow(object):
     def add_files(self, fn):
         """ Add additional files to the tool-flow
         """
-        pass
+        if isinstance(fn, str):
+            fn = {fn}
+        if isinstance(fn, (list, tuple, set)):
+            if not all(isinstance(ff, str) for ff in fn):
+                raise ValueError("Individual filenames must be strings")
+        else:
+            raise ValueError("Argument must be a string or a list/tuple/set of strings")
+            
+        self._hdl_file_list.update(set(fn))
 
+    def add_cores(self, fn):
+        """ Add vendor specific cores
+        """
 
-    def run(self, use='verilog', filename=None):
+    def run(self, use='verilog', name=None):
         """ Execute the tool-flow
+
+          use  : indicated if Verilog or VHDL should be used.
+          name : user supplied name for project and top-level
         """
         pass

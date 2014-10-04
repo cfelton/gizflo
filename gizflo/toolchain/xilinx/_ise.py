@@ -42,25 +42,13 @@ class ISE(_toolflow):
 
     def __init__(self, brd, top=None, path='./xilinx/'):
         """
-        Give a top-level module (function) and a board definition
+        Given a top-level module (function) and a board definition
         create an instance of the ISE tool-chain.
         """
         _toolflow.__init__(self, brd, top=top, path=path)
         #self.reports = _ise_parse_reports(self)
         self.ucf_file = ''
     
-
-    def add_files(self, fn):
-        if isinstance(fn, str):
-            fn = {fn}
-        if isinstance(fn, (list, tuple, set)):
-            if not all(isinstance(ff, str) for ff in fn):
-                raise ValueError("Individual filenames must be strings")
-        else:
-            raise ValueError("Argument must be a string or a list/tuple/set of strings")
-            
-        self._hdl_file_list.update(set(fn))
-
         
     def create_constraints(self):
         self.ucf_file = os.path.join(self.path, self.name+'.ucf')
@@ -205,7 +193,7 @@ class ISE(_toolflow):
             
         return fn
 
-    def run(self, use='verilog', filename=None):
+    def run(self, use='verilog', name=None):
         """ Execute the tool-flow """
 
         self.pathexist(self.path)
@@ -230,7 +218,6 @@ class ISE(_toolflow):
         except Exception, err:
             print(err)
             raise err
-
 
         return self.logfn
 

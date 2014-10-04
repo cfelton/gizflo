@@ -14,8 +14,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from myhdl import Signal,intbv
-from ...extintf import Clock,Reset
 from ..._fpga import _fpga
 
 class Xula(_fpga):

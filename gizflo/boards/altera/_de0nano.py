@@ -1,4 +1,5 @@
-# Copyright (c) 2014 Christopher Felton
+#
+# Copyright (c) 2013-2014 Jos Huisken, Christopher L. Felton
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -13,31 +14,24 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import division
-from __future__ import print_function
+from ..._fpga import _fpga
 
-from xilinx._xula import Xula, Xula2
-from altera._de0nano import DE0Nano
+class DE0Nano(_fpga):
+    vendor = 'altera'
+    family = 'Cyclone IV E'
+    device = 'EP4CE22F17C6'
+    speed = '6'
+    _name = 'de0nano'
 
-xbrd = {
-    'xula': Xula,
-    'xula2': Xula2,
-}
+    default_clocks = {
+        'clock': dict(frequency=50e6, pins=('R8',))
+    }
 
-abrd = {
-    'de0nano' : DE0Nano,
-}
-
-def get_board(name):
-    """ retrieve a board definition from the name provided.
-    """
-    brd = None
-    if xbrd.has_key(name):
-        brd = xbrd[name]()
-    elif abrd.has_key(name):
-        brd = abrd[name]()
-    else:
-        # @todo: print out a list of boards and descriptions
-        raise ValueError("Invalid board %s"%(name,))
+    default_resets = {
+        'reset': dict(active=0, async=True, pins=('J15',))
+    }
     
-    return brd
+    default_ports = {
+        'led': dict(pins=('L3', 'B1', 'F3', 'D1',
+                          'A11', 'B13', 'A13', 'A15',))
+    }
