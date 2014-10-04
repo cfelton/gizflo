@@ -9,9 +9,13 @@ class _extintf(object):
 
     An external interface needs the ports and pins.
     """
-    
-    def __init__(self):
+    default_ports = {}
+    default_clocks = {}
+    default_resets = {}
+
+    def __init__(self, *ports, **params):
         """ 
+        An external interface will 
         """
         pass
     
