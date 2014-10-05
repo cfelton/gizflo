@@ -142,7 +142,7 @@ class _fpga(object):
         A port name is linked to a default port name or a subset
         (slice) is linked to the new name.  
 
-        Example: brd.link_port_name('wingC', 'led', 7)
+        Example: brd.add_port_name('wingC', 'led', 7)
         where wingC is a 16-bit port bit-vector
 
         To extract a range from the port, the slice class has to
@@ -168,7 +168,7 @@ class _fpga(object):
         uses the port names that exist in the object and doesn't
         have a method to select from multiple definitions.  Also,
         useful when the top-level HDL has conflicts.
-        """
+        """        
         pass
 
         
@@ -178,7 +178,8 @@ class _fpga(object):
         self._extintfs[name] = extintf
         # @todo: extract all the ports from the extintf and 
         #    add them to the global port dict
-
+        for k,v in extintf.items():
+            
 
     def get_portmap(self, top=None, **kwargs):
         """ given a top-level map the port definitions 

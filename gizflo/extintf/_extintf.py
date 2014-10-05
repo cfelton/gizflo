@@ -17,7 +17,15 @@ class _extintf(object):
         """ 
         An external interface will 
         """
-        pass
+        # walk through the ports and update
+        self._ports = dict(self.default_ports)
+        for pp in ports:
+            self._ports[pp.name] = pp
+
+        # misc parameters
+        self._params = dict(params)
+        
+            
     
 
     
