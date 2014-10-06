@@ -30,7 +30,7 @@ class SDRAM(_extintf):
         'udqs': None,  # data strobe, upper byte
         'ldqs': None,  # data strobe, lower byte
 
-        'dqm':, None,  # data mask
+        'dqm':  None,  # data mask
         'udqm': None,  # upper data mask
         'ldqm': None,  # lower data mask
 

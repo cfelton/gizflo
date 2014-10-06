@@ -15,6 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from ..._fpga import _fpga
+from ...extintf._extintf import _extintf
+from ...extintf._port import Port
 from ...extintf._sdram import SDRAM
 
 class Xula(_fpga):
@@ -91,7 +93,7 @@ class Xula2(_fpga):
               Port('clkfb', pins=('K11',) ),
               Port('cs', pins=('H4',) ),
               Port('we', pins=('M3',) ),
-              Port('cke',  pins=('J12',))
+              Port('cke',  pins=('J12',)),
               
               # timing information, all in ns
               timing = dict(
@@ -108,14 +110,14 @@ class Xula2(_fpga):
 
           #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
           #  SPI and MicroSD
-          'flash': _extintf(
-              Port('sclk', pins=(,)),
-              Port('sdi', pins=(,)),
-              Port('sdo', pins=(,)),
-              port('cs', pins=(,)),
-              )
-
-          'microsd' : None,
+          #'flash': _extintf(
+          #    Port('sclk', pins=()),
+          #    Port('sdi', pins=()),
+          #    Port('sdo', pins=()),
+          #    port('cs', pins=()),
+          #    ),
+          #
+          #'microsd' : None,
 
           #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
           # 

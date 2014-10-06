@@ -60,7 +60,7 @@ class _fpga(object):
         for k,v in self.default_ports.iteritems():
             self.add_port(k, **v)
         for k,v in self.default_extintf.iteritems():
-            self.add_extintf(k, **v)
+            self.add_extintf(k, v)
 
 
     @property
@@ -178,8 +178,8 @@ class _fpga(object):
         self._extintfs[name] = extintf
         # @todo: extract all the ports from the extintf and 
         #    add them to the global port dict
-        for k,v in extintf.items():
-            
+        pass
+
 
     def get_portmap(self, top=None, **kwargs):
         """ given a top-level map the port definitions 

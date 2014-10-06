@@ -47,6 +47,7 @@ class Quartus(_toolflow):
         self._core_file_list = set()
         self._default_project_file = None
         
+
     def add_cores(self, filename):
         self._core_file_list.update(set(filename))
 
@@ -67,7 +68,11 @@ class Quartus(_toolflow):
             qsf += "set_global_assignment -name %s %s\n" % (type_file[use], f,)
         qsf += "set_global_assignment -name FAMILY \"%s\"\n" % (self.brd.family,)
         qsf += "set_global_assignment -name DEVICE %s\n" % (self.brd.device,)
-        qsf += "set_global_assignment -name TOP_LEVEL_ENTITY %s\n" % (self.brd.top.func_name,)
+        # there is an issue here that needs to be resolved, with a version or 
+        # platform dependent the myhdl converters will rename the module to 
+        # the name specificed with toV*.name and on another version/platform
+        # it does not (self.brd.top.func_name,)
+        qsf += "set_global_assignment -name TOP_LEVEL_ENTITY %s\n" % (self.name,)
         qsf += "set_global_assignment -name STRATIX_DEVICE_IO_STANDARD \"2.5 V\"\n"
 
         for k,v in pattr.items():
