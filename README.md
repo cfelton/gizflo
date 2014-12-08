@@ -74,7 +74,7 @@ match for each port.
 ```python
 import gizflo as gf
 brd = gf.get_board('xula2')
-flo = gf.flo.ISE(top=m_blinky, brd=brd)
+flow = brd.get_flow(top=m_blinky)
 flo.run()
 ```
 
