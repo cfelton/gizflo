@@ -4,7 +4,7 @@ if this functionality will be moved from the
 [myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) 
 package to this package and repository.  
 
-** This is an experiment - for now **
+**This is an experiment - for now**
 
 
 Introduction
