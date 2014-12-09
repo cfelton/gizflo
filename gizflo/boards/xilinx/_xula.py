@@ -18,6 +18,7 @@ from ..._fpga import _fpga
 from ...extintf._extintf import _extintf
 from ...extintf._port import Port
 from ...extintf._sdram import SDRAM
+from ...toolchain import ISE
 
 class Xula(_fpga):
     vendor = 'xilinx'
@@ -40,6 +41,9 @@ class Xula(_fpga):
 
         
     }
+
+    def get_flow(self):
+        return ISE(brd=self)
 
 
 class Xula2(_fpga):
@@ -122,3 +126,7 @@ class Xula2(_fpga):
           #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
           # 
       }
+
+
+      def get_flow(self):
+          return ISE(brd=self)

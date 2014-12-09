@@ -105,7 +105,7 @@ def get_utilization(fn=None):
                 # check sliptls
                 sp1 = ln.split(':')
                 if len(sp1) != 2:
-                    state = States.search
+                    state = States.search                    
                     continue
                 sp2 = sp1[1].split()
                 if len(sp2) != 5:

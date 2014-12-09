@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from ..._fpga import _fpga
+from ...toolchain import Quartus
 
 class DE0Nano(_fpga):
     vendor = 'altera'
@@ -35,3 +36,6 @@ class DE0Nano(_fpga):
         'led': dict(pins=('L3', 'B1', 'F3', 'D1',
                           'A11', 'B13', 'A13', 'A15',))
     }
+
+    def get_flow(self):
+        return Quartus(brd=self)

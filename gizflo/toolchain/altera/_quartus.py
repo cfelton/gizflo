@@ -28,6 +28,9 @@ from .._convert import convert
 from ..._fpga import _fpga
 from ...extintf import Clock
 
+from _quartus_parse_reports import get_utilization
+from _quartus_parse_reports import get_fmax
+
 _default_pin_attr = {
     '': None,
 }
@@ -195,3 +198,12 @@ class Quartus(_toolflow):
             raise err
 
         return self.logfn
+
+
+    def get_utilization(self):
+        fitlog = os.path.join(self.path, self.name+'.fit.rpt')
+        info = get_utilization(fitlog)
+        stalog = os.path.join(self.path, self.name+'.sta.rpt')
+        info = get_fmax(stalog, info)
+        return info
+

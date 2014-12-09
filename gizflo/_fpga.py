@@ -79,6 +79,9 @@ class _fpga(object):
             self.top_name = top.func_name
 
 
+    def get_flow(self):
+        pass
+
     def _remove_embed_attr(self, pins, pattr):
         """ removed an embedded pin attribute def if present.
         """
