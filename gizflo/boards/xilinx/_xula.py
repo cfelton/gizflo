@@ -42,8 +42,8 @@ class Xula(_fpga):
         
     }
 
-    def get_flow(self):
-        return ISE(brd=self)
+    def get_flow(self, top=None):
+        return ISE(brd=self, top=top)
 
 
 class Xula2(_fpga):
@@ -128,5 +128,5 @@ class Xula2(_fpga):
       }
 
 
-      def get_flow(self):
-          return ISE(brd=self)
+      def get_flow(self, top=None):
+          return ISE(brd=self, top=top)
