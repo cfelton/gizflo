@@ -207,6 +207,8 @@ class _fpga(object):
         # is convention that ports are the arguments and parameters
         # are keyword arguments.  A parameter can exist in this 
         # list but it can't be empty ...
+        # @todo: this needs some more thought, keyword args might 
+        #    be ports, need a method to determine.
         hdlports = {}
         if pp.defaults is not None:
             pl = len(pp.args)-len(pp.defaults)
@@ -218,7 +220,8 @@ class _fpga(object):
         for ii,kw in enumerate(pp.args[pl:]):
             params[kw] = pp.defaults[ii]
 
-        # see if any o fth eports or parameters have been overridden
+
+        # see if any of the ports or parameters have been overridden
         if self.top_params is not None:
             for k,v in self.top_params.iteritems():
                 if hdlports.has_key(k):
