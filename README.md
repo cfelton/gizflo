@@ -11,8 +11,10 @@ Introduction
 ============
 The name of this project, *gizflo*, is a play on the the word 
 gizmo.  It is intended to mean "that FPGA flow".  This project 
-simplifies, the sometimes complicated, FPGA tool-chains, in 
-particular for [MyHDL](www.myhdl.org) designs.
+simplifies, the sometimes complicated, FPGA tool-chains. 
+This tool was originally developed to automate the FPGA flow 
+for FPGA designs implemented in [MyHDL](www.myhdl.org).  The
+flow provides a one-button approach to the tool flow.
 
 This project initiated as a quick tool to create a simple
 tool-flow for an [FPGA workshop]
