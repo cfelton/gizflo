@@ -2,9 +2,7 @@
 NOTE:  This is a work in progress and it is not 100% determined
 if this functionality will be moved from the
 [myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) 
-package to this package and repository.  
-
-**This is an experiment - for now**
+package to this package and repository, in otherwords **This is an experiment - for now**.
 
 
 Introduction
@@ -121,10 +119,10 @@ brd.bootstrap('vhdl')
 Map
 ---
 Most designs require a minimal set of external intefaces but
-many designs can utilize many different sets.  In this case 
+many designs can utilize many different sets of interfaces.  
+In this case 
 the design determines which external interfaces it wants to 
-utilize.  In somecases a port will need to be *named* to match
-the expected ports.
+utilize.  
 
 <!-- 
   This example needs some more thought, the example 
@@ -162,7 +160,7 @@ The board definitions encapsulate majority of the information
 needed for an FPGA project.  The board definition captures the
 pins, timing information, and external interface.
 
-A board definition can be created by defing the default ports.
+A board definition can be created by defining the default ports.
 The default ports are typically the pin names given in the 
 manufactures documentation or schematics.
 
@@ -193,7 +191,7 @@ class Xula2(_fpga):
 
 Creating External Interface Definitions
 =======================================
-Many FPGA development boards have similar peripherals on the baords, 
+Many FPGA development boards have similar peripherals on the boards, 
 things like Ethernet PHYs, video PHYs, external memory, etc.  The 
 external interfaces encapsulate the informaiton required to configure
 the intefaces (setting up the pins and constraints).  In some cases
@@ -227,5 +225,7 @@ Notes
 [^1] explain why board definition is used, the whole thing about 
      FPGA instance but FPGA def is misleading, etc.
 
+<!--
 References
 ==========
+-->
