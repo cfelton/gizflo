@@ -15,6 +15,7 @@
 
 
 import os
+import time
 import shutil
 
 import myhdl
@@ -58,6 +59,7 @@ def convert(brd, top=None, name=None, use='verilog', path='.'):
 
     # make sure the working directory exists
     #assert brd.pathexist(brd.path)
+    time.sleep(2)
 
     # copy files etc to the working directory
     tbfn = 'tb_' + brd.vfn
@@ -74,7 +76,10 @@ def convert(brd, top=None, name=None, use='verilog', path='.'):
             os.remove(dst)
         if os.path.isfile(src):
             print('   moving %s --> %s'%(src, path))
-            shutil.move(src, path)
+            try:
+                shutil.move(src, path)
+            except Exception,err:
+                print("skipping %s because %s" % (src, err,))
 
     if use.lower() == 'verilog':
         filelist = (brd.vfn,)
