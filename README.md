@@ -36,7 +36,7 @@ development board.
 *gizflo* goals
 --------------
 
-  * generate a large collecition of board definitions [^1].
+  * generate a large collection of board definitions [^1].
 
   * automate the FPGA tool-chains.
 
@@ -68,7 +68,7 @@ At this point three different paths can be taken:
 
 Fuse 
 ----
-Given a MyHDL top-level and a board defintion find a
+Given a MyHDL top-level and a board definition find a
 match for each port. 
 
 ```python
@@ -116,9 +116,10 @@ brd.bootstrap('vhdl')
  This example should show how a module defines the HDL 
  based on the interfaces available.
 -->
+
 Map
 ---
-Most designs require a minimal set of external intefaces but
+Most designs require a minimal set of external interfaces but
 many designs can utilize many different sets of interfaces.  
 In this case 
 the design determines which external interfaces it wants to 
@@ -126,7 +127,7 @@ utilize.
 
 <!-- 
   This example needs some more thought, the example 
-  needs to capture mithro's intentaion, extracting 
+  needs to capture mithro's intention, extracting 
   interfaces and building the design around the available
   interfaces.
 
@@ -138,7 +139,7 @@ import gizflo as gf
 brd = gf.get_board('xula2')
 
 # pass the board to the top-level, the top-level will 
-# create the portmap, the "ports()" provides a ditionary
+# create the portmap, the "ports()" provides a dictionary
 # of ports.
 g = m_top_level(**brd.get_portmap())
 
@@ -193,17 +194,18 @@ Creating External Interface Definitions
 =======================================
 Many FPGA development boards have similar peripherals on the boards, 
 things like Ethernet PHYs, video PHYs, external memory, etc.  The 
-external interfaces encapsulate the informaiton required to configure
-the intefaces (setting up the pins and constraints).  In some cases
+external interfaces encapsulate the information required to configure
+the interfaces (setting up the pins and constraints).  In some cases
 defining an external interfaces is simply adding the common name and
 associating the pins with the common port names for the interface.
 
+<!--
 Example: VGA
 ------------
 
 Example: Ethernet
 -----------------
-
+-->
 
 Work In Progress
 ================
@@ -214,11 +216,12 @@ being developed.
 <!--
 MyHDL Version
 =============
-Currenlty a modified version of the MyHDL package needs to be
+Currently a modified version of the MyHDL package needs to be
 utilized to use the *bootstrap* function.  A [MEP]() has been
 created and the required feature should be incorporate soon.
-Go [here]() and up-vote the issue to insentivize the addition.
+Go [here]() and up-vote the issue to insensitive the addition.
 -->
+
 
 Notes
 =====
