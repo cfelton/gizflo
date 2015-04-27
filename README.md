@@ -13,8 +13,8 @@ flow provides a one-button approach to the tool flow.
 
 This project initiated as a quick tool to create a simple
 tool-flow for an [FPGA workshop]
-(http://www.fpgarelated.com/showarticle/437.php).  
-The tool-chain automation allowed the participants to start 
+(http://www.fpgarelated.com/showarticle/437.php).  The tool-chain 
+automation allowed the participants to start 
 **hacking** an FPGA instantly (well, almost, you still need to 
 go through the hassle to install the vendor tools).
 
