@@ -27,7 +27,7 @@ package but it was eventually determined
 the tool-flow needed a separate project and moved here.
 
 This project is built with [myhdl](www.myhdl.org) and can 
-also be used to auto-majically map myhdl designs to an FPGA 
+also be used to auto-majically map [myhdl](www.myhdl.org) designs to an FPGA 
 development board.
 
 *gizflo* goals
@@ -37,7 +37,7 @@ development board.
 
   * automate the FPGA tool-chains.
 
-  * easily map myhdl designs to a development board.
+  * easily map [myhdl](www.myhdl.org) designs to a development board.
 
 
 Example Usage
