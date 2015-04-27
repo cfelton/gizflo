@@ -1,8 +1,5 @@
 
-NOTE:  This is a work in progress and it is not 100% determined
-if this functionality will be moved from the
-[myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) 
-package to this package and repository, in otherwords **This is an experiment - for now**.
+NOTE:  This is a work in progress and has not reached a minor release point, yet.  The FPGA flow from [myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) has been moved to this project, the myhdl_tools version will not be updated, all future FPGA flow development will occur in this repository.
 
 
 Introduction
@@ -26,7 +23,7 @@ FPGA development boards for quick analysis and allow the designer
 to focus on the HDL design and not the tool-flow.  The first version 
 of the tool-flow existed in the [myhdl_tool]
 (https://bitbucket.org/cfelton/myhdl_tools) 
-package but it was eventually (still under consideration) determined 
+package but it was eventually determined 
 the tool-flow needed a separate project and moved here.
 
 This project is built with [myhdl](www.myhdl.org) and can 
@@ -55,7 +52,6 @@ brd = gf.get_board('xula2')
 
 At this point three different paths can be taken:
 
-
   1. *Fuse*, given a board definition and a MyHDL top-level
      automatically match ports and execute the tool-flow.
 
@@ -64,6 +60,9 @@ At this point three different paths can be taken:
 
   <!-- extract -->
   3. *Map*, dynamically map HDL modules to external interfaces.
+  
+  4. *Stitching*, this uses generic wrappers to *stitch* 
+     existing HDL cores together.    
 
 
 Fuse 
