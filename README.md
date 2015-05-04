@@ -74,7 +74,7 @@ match for each port.
 import gizflo as gf
 brd = gf.get_board('xula2')
 flow = brd.get_flow(top=m_blinky)
-flo.run()
+flow.run()
 ```
 
 A *port* is the signal in the top-level HDL module and a *pin* is 
