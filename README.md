@@ -1,11 +1,10 @@
+[![Join the chat at https://gitter.im/cfelton/gizflo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cfelton/gizflo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 NOTE:  This is a work in progress and has not reached a minor release point, yet.  The FPGA flow from [myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) has been moved to this project, the myhdl_tools version will not be updated, all future FPGA flow development will occur in this repository.
 
 
 Introduction
 ============
-
-[![Join the chat at https://gitter.im/cfelton/gizflo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cfelton/gizflo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 The name of this project, *gizflo*, is a play on the the word 
 gizmo.  It is intended to mean "that FPGA flow".  This project 
 simplifies, the sometimes complicated, FPGA tool-chains. 
