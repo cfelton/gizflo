@@ -4,6 +4,8 @@ NOTE:  This is a work in progress and has not reached a minor release point, yet
 
 Introduction
 ============
+
+[![Join the chat at https://gitter.im/cfelton/gizflo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cfelton/gizflo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 The name of this project, *gizflo*, is a play on the the word 
 gizmo.  It is intended to mean "that FPGA flow".  This project 
 simplifies, the sometimes complicated, FPGA tool-chains. 
