@@ -64,7 +64,7 @@ class ISE(_toolflow):
                     else:
                         ustr += "NET \"%s<%d>\" " % (port_name, ii)
 
-                    # pure numeric pins need a preceeding "p" otherwise
+                    # pure numeric pins need a preceding "p" otherwise
                     # use the string defined
                     if isinstance(pn, str):
                         ustr += "LOC = \"%s\" " % (str(pn))
