@@ -1,3 +1,4 @@
+[![Join the chat at https://gitter.im/cfelton/gizflo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cfelton/gizflo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 NOTE:  This is a work in progress and has not reached a minor release point, yet.  The FPGA flow from [myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) has been moved to this project, the myhdl_tools version will not be updated, all future FPGA flow development will occur in this repository.
 
@@ -74,7 +75,7 @@ match for each port.
 import gizflo as gf
 brd = gf.get_board('xula2')
 flow = brd.get_flow(top=m_blinky)
-flo.run()
+flow.run()
 ```
 
 A *port* is the signal in the top-level HDL module and a *pin* is 
