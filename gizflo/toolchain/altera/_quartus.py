@@ -73,7 +73,7 @@ class Quartus(_toolflow):
         qsf += "set_global_assignment -name DEVICE %s\n" % (self.brd.device,)
         # there is an issue here that needs to be resolved, with a version or 
         # platform dependent the myhdl converters will rename the module to 
-        # the name specificed with toV*.name and on another version/platform
+        # the name specified with toV*.name and on another version/platform
         # it does not (self.brd.top.func_name,)
         qsf += "set_global_assignment -name TOP_LEVEL_ENTITY %s\n" % (self.name,)
         qsf += "set_global_assignment -name STRATIX_DEVICE_IO_STANDARD \"2.5 V\"\n"
@@ -81,7 +81,7 @@ class Quartus(_toolflow):
         for k,v in pattr.items():
             qsf += "set_global_assignment -name %s  %s\n" %(k, v)
 
-        # Add pin constraints/assignemnts
+        # Add pin constraints/assigments
         for port_name,port in self.brd.ports.items():
             if port.inuse:
                 _pins = port.pins
