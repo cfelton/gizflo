@@ -2,7 +2,7 @@
 NOTE:  This is a work in progress and it is not 100% determined
 if this functionality will be moved from the
 [myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) 
-package to this package and repository, in otherwords **This is an experiment - for now**.
+package to this package and repository, in other words **This is an experiment - for now**.
 
 
 Introduction
@@ -165,9 +165,9 @@ A board definition can be created by defining the default ports.
 The default ports are typically the pin names given in the 
 manufactures documentation or schematics.
 
-Example: Xess Xula2
+Example: XESS Xula2
 -------------------
-The following is a minimal example creating a board defition
+The following is a minimal example creating a board definition
 for the [Xess Xula2](http://www.xess.com/shop/product/xula2-lx25/).
 
 ```python
