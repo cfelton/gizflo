@@ -159,7 +159,7 @@ Creating a Board Definition
 ===========================
 The board definitions encapsulate majority of the information
 needed for an FPGA project.  The board definition captures the
-pins, timing information, and external interface.
+pins, timing information, and external interfaces.
 
 A board definition can be created by defining the default ports.
 The default ports are typically the pin names given in the 
@@ -189,6 +189,15 @@ class Xula2(_fpga):
                       }
 
 ```
+
+The above example demonstrates how to define the port-pin mapping for the
+Xess Xula2 board.  The pin and pin names are defined in table A.1 in the
+[Xula2 documentation](http://www.xess.com/static/media/manuals/XuLA2-manual.pdf).
+The above example has the bare minimum, contains the clocks on the board 
+and a subset of the IO.  The Xula2 board also has addition peripherials 
+including: SPI Flash, SDRAM, USB micro interface, and MicroSD.  These pins
+and/or interfaces would also be added to the board definition.
+
 
 Creating External Interface Definitions
 =======================================
