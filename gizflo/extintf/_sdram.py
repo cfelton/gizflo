@@ -1,6 +1,6 @@
 
-from _clock import Clock
-from _extintf import _extintf
+from ._clock import Clock
+from ._extintf import _extintf
 
 class SDRAM(_extintf):
     """
@@ -50,7 +50,7 @@ class SDRAM(_extintf):
     def __init__(self, *ports, **params):
 
         # is this DDR SDRAM or SDR SDRAM (ddr=0)
-        if params.has_key('ddr'):
+        if 'ddr' in params:
             self.ddr = params['ddr']
         else:
             self.ddr = 0
@@ -66,9 +66,5 @@ class SDRAM(_extintf):
         # update any of the timing information
         self._timing = dict(self.default_timing)
         for k,v in params.items():
-            if self._timing.has_key(k):
+            if k in self._timing:
                 self._timing[k] = v
-        
-
-    
-    

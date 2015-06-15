@@ -78,7 +78,7 @@ def convert(brd, top=None, name=None, use='verilog', path='.'):
             print('   moving %s --> %s'%(src, path))
             try:
                 shutil.move(src, path)
-            except Exception,err:
+            except Exception as err:
                 print("skipping %s because %s" % (src, err,))
 
     if use.lower() == 'verilog':

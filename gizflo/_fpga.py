@@ -22,9 +22,9 @@ from copy import copy
 
 import myhdl
 
-from extintf import Port
-from extintf import Clock
-from extintf import Reset
+from .extintf import Port
+from .extintf import Clock
+from .extintf import Reset
 
 
 class _fpga(object):

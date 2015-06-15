@@ -159,7 +159,7 @@ Creating a Board Definition
 ===========================
 The board definitions encapsulate majority of the information
 needed for an FPGA project.  The board definition captures the
-pins, timing information, and external interface.
+pins, timing information, and external interfaces.
 
 A board definition can be created by defining the default ports.
 The default ports are typically the pin names given in the 
@@ -172,23 +172,32 @@ for the [Xess Xula2](http://www.xess.com/shop/product/xula2-lx25/).
 
 ```python
 class Xula2(_fpga):
-      vendor = 'xilinx'
-      family = 'spartan6'
-      device = 'XC6SLX25'
-      default_clocks = {'clock': dict(frequency=12e6, pins=('A9',)),
-                        'chan_clk': dict(frequency=1e6, pins=('T7')
-			}
+    vendor = 'xilinx'
+    family = 'spartan6'
+    device = 'XC6SLX25'
+    default_clocks = {'clock': dict(frequency=12e6, pins=('A9',)),
+                      'chan_clk': dict(frequency=1e6, pins=('T7')
+   	             }
 
-      default_ports = {'chan': dict(pins=(
-                                 'R7','R15','R16','M15','M16','K15',  #0-5
-                                 'K16','J16','J14','F15','F16','C16', #6-11
-                                 'C15','B16','B15','T4','R2','R1',    #12-17
-                                 'M2','M1','K3','J4','H1','H2',       #18-23
-                                 'F1','F2','E1','E2','C1','B1',       #24-29
-                                 'B2','A2',) 
-                      }
+    default_ports = {'chan': dict(pins=(
+                               'R7','R15','R16','M15','M16','K15',  #0-5
+                               'K16','J16','J14','F15','F16','C16', #6-11
+                               'C15','B16','B15','T4','R2','R1',    #12-17
+                               'M2','M1','K3','J4','H1','H2',       #18-23
+                               'F1','F2','E1','E2','C1','B1',       #24-29
+                               'B2','A2',) 
+                    }
 
 ```
+
+The above example demonstrates how to define the port-pin mapping for the
+Xess Xula2 board.  The pin and pin names are defined in table A.1 in the
+[Xula2 documentation](http://www.xess.com/static/media/manuals/XuLA2-manual.pdf).
+The above example has the bare minimum, contains the clocks on the board 
+and a subset of the IO.  The Xula2 board also has addition peripherials 
+including: SPI Flash, SDRAM, USB micro interface, and MicroSD.  These pins
+and/or interfaces would also be added to the board definition.
+
 
 Creating External Interface Definitions
 =======================================
