@@ -28,8 +28,8 @@ from .._convert import convert
 from ..._fpga import _fpga
 from ...extintf import Clock
 
-from _quartus_parse_reports import get_utilization
-from _quartus_parse_reports import get_fmax
+from ._quartus_parse_reports import get_utilization
+from ._quartus_parse_reports import get_fmax
 
 _default_pin_attr = {
     '': None,
@@ -193,7 +193,7 @@ class Quartus(_toolflow):
                                   stderr=subprocess.STDOUT,
                                   stdout=logfile)
             logfile.close()
-        except Exception, err:
+        except Exception as err:
             print(err)
             raise err
 
