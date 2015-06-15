@@ -16,9 +16,9 @@
 from __future__ import division
 from __future__ import print_function
 
-from xilinx._xula import Xula, Xula2
-from xilinx._papilio import Pone
-from altera._de0nano import DE0Nano
+from .xilinx._xula import Xula, Xula2
+from .xilinx._papilio import Pone
+from .altera._de0nano import DE0Nano
 
 xbrd = {
     'xula': Xula,

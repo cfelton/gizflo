@@ -1,2 +1,2 @@
 
-from _quartus import Quartus
+from ._quartus import Quartus
