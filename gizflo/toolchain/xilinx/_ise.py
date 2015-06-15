@@ -26,7 +26,7 @@ from .._toolflow import _toolflow
 from .._convert import convert
 from ..._fpga import _fpga
 from ...extintf import Clock
-from _ise_parse_reports import get_utilization
+from ._ise_parse_reports import get_utilization
 
 _default_pin_attr = {
     'NET': None,
@@ -215,7 +215,7 @@ class ISE(_toolflow):
                                   stderr=subprocess.STDOUT,
                                   stdout=logfile)
             logfile.close()
-        except Exception, err:
+        except Exception as err:
             print(err)
             raise err
 

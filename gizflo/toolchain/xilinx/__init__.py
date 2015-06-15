@@ -1,2 +1,2 @@
 
-from _ise import ISE
+from ._ise import ISE
