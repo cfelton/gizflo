@@ -15,6 +15,7 @@
 
 from __future__ import division
 from __future__ import print_function
+from __future__ import absolute_imports
 
 import sys
 import os
@@ -22,9 +23,9 @@ from time import gmtime, strftime
 import subprocess
 from pprint import pprint
 
-from .._toolflow import _toolflow
-from .._convert import convert
-from ..._fpga import _fpga
+from gizflo.toolflow._toolflow import _toolflow
+from gizflo.toolflow._convert import convert
+from gizflo._fpga import _fpga
 
 
 class Vivado(_toolflow):
@@ -41,6 +42,7 @@ class Vivado(_toolflow):
         """
         _toolflow.__init__(self, brd, top=top, path=path)
         self.xcf_file = ''
+        self._default_project_file = None
 
 
     def create_project(self, use='verilog', **pattr):
@@ -50,7 +52,9 @@ class Vivado(_toolflow):
         :return:
         """
         self.xcl_file = os.path.join(self.path, self.name+'.tcl')
+        xpr = ''
 
+        # file list
 
 
     def create_constraints(self):
