@@ -1,6 +1,11 @@
 [![Join the chat at https://gitter.im/cfelton/gizflo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cfelton/gizflo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-NOTE:  This is a work in progress and has not reached a minor release point, yet.  The FPGA flow from [myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) has been moved to this project, the myhdl_tools version will not be updated, all future FPGA flow development will occur in this repository.
+NOTE:  This is a work in progress and has not reached a minor release 
+point, yet.  The FPGA flow from 
+[myhdl_tools](https://bitbucket.org/cfelton/myhdl_tools) has been 
+moved to this project, the myhdl_tools version will not be updated, 
+all future FPGA flow development will occur in this repository.
+
 
 
 Introduction
@@ -165,9 +170,9 @@ A board definition can be created by defining the default ports.
 The default ports are typically the pin names given in the 
 manufactures documentation or schematics.
 
-Example: Xess Xula2
+Example: XESS Xula2
 -------------------
-The following is a minimal example creating a board defition
+The following is a minimal example creating a board definition
 for the [Xess Xula2](http://www.xess.com/shop/product/xula2-lx25/).
 
 ```python
