@@ -67,6 +67,12 @@ class _fpga(object):
     def ports(self):
         return self._ports
 
+    def get_port(self, port_name):
+        port = None
+        if port_name in self._ports:
+            port = self._ports[port_name]
+        return port
+
     def has_top(self):
         """ a top-level is set """
         return self.top is not None

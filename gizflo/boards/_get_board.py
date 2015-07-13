@@ -18,7 +18,9 @@ from __future__ import print_function
 
 from .xilinx._xula import Xula, Xula2
 from .xilinx._papilio import Pone
+
 from .altera._de0nano import DE0Nano
+from .altera._de0nano_soc import DE0NanoSOC
 
 xbrd = {
     'xula': Xula,
@@ -27,7 +29,8 @@ xbrd = {
 }
 
 abrd = {
-    'de0nano' : DE0Nano,
+    'de0nano': DE0Nano,
+    'de0nano_soc': DE0NanoSOC,
 }
 
 def get_board(name):
