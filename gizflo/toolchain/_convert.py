@@ -45,6 +45,7 @@ def convert(brd, top=None, name=None, use='verilog', path='.'):
     if use.lower() == 'verilog':
         if name is not None:
             myhdl.toVerilog.name = name
+        myhdl.toVerilog.no_testbench = True
         myhdl.toVerilog(brd.top, **pp)
         brd.name = name
         brd.vfn = "%s.v"%(name)

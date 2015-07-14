@@ -1,4 +1,6 @@
 
+from __future__ import print_function
+
 from pprint import pprint
 
 import gizflo as gz
@@ -10,8 +12,8 @@ def run_nano():
     brd.add_port('toggle', pins=("W15",))
     flo = gz.flo.Quartus(brd=brd, top=m_blink)
     flo.run(use='vhdl')
-    #info = flo.get_utilization()
-    #pprint(info)
+    info = flo.get_utilization()
+    pprint(info)
 
 if __name__ == '__main__':
     run_nano()

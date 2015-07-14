@@ -35,7 +35,6 @@ def get_fmax(fn, info):
 
         elif state == States.fmax:
             if lncnt == 5:
-                print(lncnt, ": ", ln)
                 fstr = ln.split(';')
                 if len(fstr) < 2:
                     state = States.search
@@ -77,11 +76,24 @@ def get_utilization(fn=None):
     state = States.search
     glncnt,lncnt = 0,0
 
-    for ln in log:
+    #  5 "Total logic elements"
+    # 20 "Total registers"
+    # 34 "Embedded Multiplier"
+    # these change in differen revisions
+    usage_lines = [5, 20, 34]
 
+    for ln in log:
+        
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         if state == States.search:
+            if glncnt == 2:
+                version = ln.split('Version ')[1]
+                splitlist = version.split(' ')
+                version = splitlist[0]
 
+            if glncnt > 60 and glncnt < 80 and 'Family' in ln:
+                if 'Cyclone V' in ln:
+                    usage_lines = [5, 34, 79]
             if glncnt > 64 and 'Fitter Resource Usage Summary' in ln:
                 state = States.le_util
                 lncnt = 1
@@ -89,14 +101,9 @@ def get_utilization(fn=None):
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         elif state == States.le_util:
             ln = ln.strip()
-            
-            #  5 "Total logic elements"
-            # 20 "Total registers"
-            # 34 "Embedded Multiplier"
-            if lncnt in (5,20,34):
-                print(lncnt, ': ', len(ln.split(';')), ln)
+            if lncnt in usage_lines:
                 sp1 = ln.split(';')
-                if len(sp1) != 4:
+                if len(sp1) != 4 and len(sp1) != 5:
                     state = States.search
                     continue
                     
@@ -105,28 +112,37 @@ def get_utilization(fn=None):
                 sp2 = sp2.replace('(', '')
                 sp2 = sp2.replace(')', '')
                 sp2 = sp2.split()
-                print('SP2: ', len(sp2), sp2)
-                if len(sp2) != 5:
+                if len(sp2) != 5 and len(sp2) != 3:
                     state = States.search
                     continue  # jump to the next line
 
-                pd,nm,outof,ju = ln.split(';')
+                usage = ln.split(';')
+                if len(usage) == 4:    
+                    pd,nm,outof,ju = usage
+                elif len(usage) == 5:
+                    pd1,nm,outof,per,pd2 = usage
                 outof = outof.replace('<', '')
                 outof = outof.replace('(', '')
                 outof = outof.replace(')', '')
-                x,slash,y,p,ps, = outof.split()
-                print('** ', lncnt, outof, x, slash, y, p, ps)
+                outof = outof.split()
+                if len(outof) == 5:
+                    x,slash,y,p,ps = outof
+                elif len(outof) == 3:
+                    x,slash,y = outof
+                    per = per.strip().split(' ')
+                    p = per[-2]
+                    ps = per[-1]
                 x = x.replace(',', '')
                 y = y.replace(',', '')
-            
-            if lncnt == 5:
+                
+            if lncnt == usage_lines[0]:
                 info['syn']['lut'] = tuple(map(int, (x,y,p,)))
-            elif lncnt == 20:
+            elif lncnt == usage_lines[1]:
                 info['syn']['reg'] = tuple(map(int, (x,y,p,)))
-            elif lncnt == 34:
+            elif lncnt == usage_lines[2]:
                 info['syn']['dsp'] = tuple(map(int, (x,y,p,)))
             # @todo: memory bits
-            elif lncnt >= 68:
+            elif lncnt >= 100:
                 state = States.search
 
         # keep track which line, reset for sections

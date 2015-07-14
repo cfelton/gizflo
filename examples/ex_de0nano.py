@@ -10,8 +10,8 @@ def run_nano():
     brd.add_port('toggle', pins=("A15",))
     flo = gz.flo.Quartus(brd=brd, top=m_blink)
     flo.run()
-    #info = flo.get_utilization()
-    #pprint(info)
+    info = flo.get_utilization()
+    pprint(info)
 
 if __name__ == '__main__':
     run_nano()
