@@ -181,7 +181,7 @@ class Quartus(_toolflow):
         self.add_files(cfiles)
 
         # create the ISE files to run the toolflow
-        self.create_project()
+        self.create_project(use=use)
         self.create_constraints()
         tcl_name = self.create_flow_script()
 
